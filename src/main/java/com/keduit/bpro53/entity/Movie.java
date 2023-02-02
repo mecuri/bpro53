@@ -17,12 +17,14 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @ToString
-public class Movie extends BaseEntity{
+public class Movie extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long mno;
 	
 	private String title;
+	
+	
 
 }

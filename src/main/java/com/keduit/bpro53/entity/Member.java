@@ -18,8 +18,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @ToString
-@Table(name="m_member")
-public class Member extends BaseEntity{
+@Table(name = "m_member")
+public class Member extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
