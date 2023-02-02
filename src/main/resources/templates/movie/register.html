@@ -89,7 +89,7 @@
 							return false;
 						}
 						
-						console.log(files[i]);
+						console.log("--------------files[i] : " + files[i]);
 						formData.append("uploadFiles", files[i]); // 위에서 형식과 길이가 맞을 경우에 append 함
 						appended = true; // 추가가 되었다 표시를 해주는 거래여
 					}
@@ -107,17 +107,17 @@
 						processData: false,
 						contentType: false,
 						data: formData,
-						type: 'POST',
+						type: 'post',
 						dataType: 'Json',
 						success: function(result) {
 							console.log(result);
 							showResult(result);
 						},
-						errot: function(jqXHR, textStatus, errorThrown) {
+						error: function(jqXHR, textStatus, errorThrown) {
 							console.log(textStatus);
 						}
 					}); // $.ajax
-				})
+				});
 				
 				function showResult(arr) {
 					console.log(arr);
@@ -137,6 +137,8 @@
 						str += "</div>";
 						str += "</li>";
 					}
+					console.log(str);
+					
 					divAreaUL.append(str);
 					
 					// 삭제 버튼
@@ -168,7 +170,7 @@
 							success: function(result) {
 								alert(result);
 								
-								targerLi.remove();
+								targetLi.remove();
 							}
 						})
 					
@@ -182,17 +184,20 @@
 					
 					var str = "";
 					
-					$(".uploadResult li").each(function(i, obj) {
-						var target = $(obj);
-						
-						str += "<input type='hidden' name='imgeDTOList["+i+"].imgName' value='" + target.data('name') + "'>";
-								
-						str += "<input type='hidden' name='imgeDTOList["+i+"].path' value='" + target.data('path') + "'>";
-								
-						str += "<input type='hidden' name='imgeDTOList["+i+"].uuid' value='" + target.data('uuid') + "'>";
-					});
+					$(".uploadResult li").each(function(i,obj){
+		                  var target = $(obj);
+
+		                  str += "<input type='hidden' name= 'imageDTOList["+i+"].imgname' value='"+target.data('name') +"'>";
+
+		                  str += "<input type='hidden' name= 'imageDTOList["+i+"].path' value='"+target.data('path')+"'>";
+
+		                  str += "<input type='hidden' name= 'imageDTOList["+i+"].uuid' value='"+target.data('uuid')+"'>";
+
+		              });
 					
 					$(".box").html(str);
+					
+					$("form").submit();
 					
 				});
 				

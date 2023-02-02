@@ -44,7 +44,7 @@ public class MovieRepositoryTests {
 				MovieImage movieImage = MovieImage.builder()
 												  .uuid(UUID.randomUUID().toString())
 												  .movie(movie)
-												  .imgName("test img" + j + ".jpg").build();
+												  .imgname("test img" + j + ".jpg").build();
 				
 				movieImageRepository.save(movieImage);
 			}

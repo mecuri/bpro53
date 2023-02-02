@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+
+	<th:block th:fragment="content">
+		<h1 class="mt-4">
+			게시판 목록 <span> <a th:href="@{/movie/register}">
+					<button type="button" class="btn btn-outline-primary"
+						style="float: right">등록</button>
+			</a>
+			</span>
+		</h1>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<form id="searchForm" action="/movie/list" method="get">
+					<select name="type">
+						<option value="" th:selected="${pageRequestDTO.type==null}">
+							-----</option>
+						<option value="t" th:selected="${pageRequestDTO.type=='t'}">
+							제목</option>
+						<option value="c" th:selected="${pageRequestDTO.type=='c'}">
+							내용</option>
+
+						<option value="tc" th:selected="${pageRequestDTO.type=='tc'}">제목
+							or 내용</option>
+
+					</select> <input type="text" name="keyword"
+						th:value="${pageRequestDTO.keyword}">
+					<button type="button" class="btn btn-outline-secondary btn-search">검색</button>
+					<button type="button" class="btn btn-outline-secondary btn-clear">clear</button>
+					<p></p>
+
+					<!-- <input type="hidden" name="pageNum"
+						value="${pageMaker.cri.pageNum }"> <input type="hidden"
+						name="amount" value="${pageMaker.cri.amount }"> -->
+
+				</form>
+			</div>
+
+		</div>
+
+
+
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">번호</th>
+					<th scope="col">제목</th>
+					<th scope="col">리뷰</th>
+					<th scope="col">평점평균</th>
+					<th scope="col">등록일</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="dto : ${result.dtoList}">
+					<th scope="row">[[${dto.mno}]]</th>
+					<td><img th:if="${dto.imageDTOList.size() > 0 && dto.imageDTOList[0] != null}"
+					th:src ="|/display?fileName=${dto.imageDTOList[0].getThumbnailURL()}|">
+					
+					<a
+						th:href="@{/movie/read(mno=${dto.mno},
+											   page=${result.page}
+											  )}">
+					    [[${dto.title}]]</a></td>
+					    <td>[[${dto.reviewCnt}]]</td>
+					    <td>[[${dto.avg}]]</td>
+					<td>[[${#temporals.format(dto.regDate,'yyyy/MM/dd')}]]</td>
+				</tr>
+			</tbody>
+
+		</table>
+
+		<ul class="pagination h-100 justify-content-center aligh-items-center">
+			<li class="page-item" th:if="${result.prev}"><a
+				class="page-link"
+				th:href="@{/movie/list(page=${result.start-1},
+														 type=${pageRequestDTO.type},
+														 keyword=${pageRequestDTO.keyword}
+				)}"
+				tabindex="-1">이전</a></li>
+			<li th:class="'page-item ' + ${result.page == page?'active':''}"
+				th:each="page: ${result.pageList}"><a class="page-link"
+				th:href="@{/movie/list(page=${page},
+									   type=${pageRequestDTO.type},
+									   keyword=${pageRequestDTO.keyword}
+				)}">[[${page}]]</a></li>
+			<li class="page-item" th:if="${result.next}"><a
+				class="page-link" th:href="@{/movie/list(page=${result.end},
+														 type=${pageRequestDTO.type},
+														 keyword=${pageRequestDTO.keyword}
+				)}"
+				tabindex="-1">다음</a></li>
+		</ul>
+
+
+
+		
+
+	</th:block>
+</th:block>
