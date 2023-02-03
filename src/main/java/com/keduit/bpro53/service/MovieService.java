@@ -47,6 +47,7 @@ public interface MovieService {
 		return entityMap; // entityMap = movie, imgList를 가지고 있음
 	}
 	
+	// entity -> dto
 	default MovieDTO entitiesToDTO(Movie movie, List<MovieImage> movieImages, Double avg, Long reviewCnt) {
 		
 		MovieDTO movieDTO = MovieDTO.builder().mno(movie.getMno())
@@ -55,6 +56,7 @@ public interface MovieService {
 											  .updateDate(movie.getUpdateDate())
 											  .build();
 		
+		// 이미지 처리
 		List<MovieImageDTO> movieImageDTOList = movieImages.stream().map(movieImage -> {
 			if(movieImage != null) {
 			return MovieImageDTO.builder().imgname(movieImage.getImgname())

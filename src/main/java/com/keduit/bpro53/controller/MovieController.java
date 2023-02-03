@@ -39,6 +39,7 @@ public class MovieController {
 		return "redirect:/movie/list";
 	}
 	
+	// 목록
 	@GetMapping("/list")
 	public void list(PageRequestDTO pageRequestDTO, Model model) {
 		

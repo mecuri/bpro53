@@ -56,18 +56,20 @@
 			<tbody>
 				<tr th:each="dto : ${result.dtoList}">
 					<th scope="row">[[${dto.mno}]]</th>
-						<td>
-							<img th:if="${dto.imageDTOList.size() > 0 && dto.imageDTOList[0] != null}"
-							th:src ="|/display?fileName=${dto.imageDTOList[0].getThumbnailURL()}|">
-							<a th:href="@{/movie/read(mno=${dto.mno}, page=${result.page})}">
-					    	[[${dto.title}]]
-					    	</a>
-				   		</td>
+					<td><img th:if="${dto.imageDTOList.size() > 0 && dto.imageDTOList[0] != null}"
+					th:src ="|/display?fileName=${dto.imageDTOList[0].getThumbnailURL()}|">
+					
+					<a
+						th:href="@{/movie/read(mno=${dto.mno},
+											   page=${result.page}
+											  )}">
+					    [[${dto.title}]]</a></td>
 					    <td>[[${dto.reviewCnt}]]</td>
 					    <td>[[${dto.avg}]]</td>
-						<td>[[${#temporals.format(dto.regDate,'yyyy/MM/dd')}]]</td>
+					<td>[[${#temporals.format(dto.regDate,'yyyy/MM/dd')}]]</td>
 				</tr>
 			</tbody>
+
 		</table>
 
 		<ul class="pagination h-100 justify-content-center aligh-items-center">
