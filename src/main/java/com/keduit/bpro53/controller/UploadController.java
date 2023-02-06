@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.keduit.bpro53.dto.UploadResultDTO;
 
 import lombok.extern.log4j.Log4j2;
+import net.bytebuddy.implementation.bytecode.ByteCodeAppender.Size;
 import net.coobird.thumbnailator.Thumbnailator;
 
 @RestController
@@ -99,8 +100,8 @@ public class UploadController {
       return folderPath;
    }
    
-   @GetMapping("/display")
-   public ResponseEntity<byte[]> getFile(String fileName){
+   @GetMapping("/display") // 썸네일 출력함
+   public ResponseEntity<byte[]> getFile(String fileName, String size){
       
       ResponseEntity<byte[]> result = null;
       
@@ -109,6 +110,10 @@ public class UploadController {
          log.info("fileName = " + srcFileName);
          
          File file = new File(uploadPath + File.separator + srcFileName);
+         
+         if(size != null && size.equals("1")) {
+        	 file = new File(file.getParent(), file.getName().substring(2));
+         }
          
          log.info(file);
          HttpHeaders header = new HttpHeaders();

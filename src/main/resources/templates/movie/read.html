@@ -23,7 +23,7 @@
 			</div>
 			<div class="uploadResult">
 				<ul>
-					<li th:each="movieImage: ${dto.imageDTOList}">
+					<li th:each="movieImage: ${dto.imageDTOList}" th:data-file="${movieImage.getThumbnailURL()}">
 						<img th:if="${movieImage.path != null}" th:src="|/display?fileName=${movieImage.getThumbnailURL()}|">
 					</li>
 				</ul>
@@ -252,6 +252,65 @@
 					$('.reviewModal').modal('show');
 					
 				});
+				
+				// 리뷰 수정
+				console.log("수정 전");
+				
+				$(".modifyBtn").on("click", function(){
+					
+				console.log("수정 후");
+					var data = {reviewnum: reviewnum, mno: mno, grade: grade, text: inputText.val(), mid: inputMid.val()};
+					
+					console.log("modify data : " + data);
+					
+					$.ajax({
+						url: '/reviews/'+mno+"/"+reviewnum,
+						type: "PUT",
+						data: JSON.stringify(data),
+						contentType: "application/json; charset=utf-8",
+						dataType: "text",
+						success: function(result) {
+							console.log("result : " + result);
+							self.location.reload();
+						}
+					})
+				}); 
+				/*
+					
+					reviewModal.modal('hide');
+				*/
+				
+				// 리뷰 삭제
+				$(".removeBtn").on("click", function() {
+					
+					var data = {reviewnum: reviewnum};
+					console.log("reviewnum : " + reviewnum);
+					
+					$.ajax({
+						url: '/reviews/'+mno+'/'+reviewnum,
+						type: "DELETE",
+						contentType: "application/json; charset=utf-8",
+						dataType: "text",
+						success: function(result) {
+							console.log("result : " + result);
+							self.location.reload();
+						}
+					});
+					
+					reviewModal.modal('hide');
+					
+				});
+				
+				$(".uploadResult li").click(function() {
+					
+					var file = $(this).data('file');
+					
+					console.log("file : " + file);
+					
+					$('.imageModal .modal-body').html("<img style='width:100%' src='/display?fileName=" + file + "&size=1' >");
+					
+					$(".imageModal").modal("show");
+				})
 				
 			}); // document read end
 		</script>

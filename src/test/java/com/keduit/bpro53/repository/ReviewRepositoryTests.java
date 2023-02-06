@@ -9,9 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.keduit.bpro53.dto.ReviewDTO;
 import com.keduit.bpro53.entity.Member;
 import com.keduit.bpro53.entity.Movie;
 import com.keduit.bpro53.entity.Review;
+import com.keduit.bpro53.service.ReviewService;
 
 @SpringBootTest
 public class ReviewRepositoryTests {
@@ -61,7 +63,4 @@ public class ReviewRepositoryTests {
 		});
 	}
 	
-	
-
-
 }

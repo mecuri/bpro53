@@ -48,7 +48,7 @@ public class ReviewServiceImpl implements ReviewService {
 		if(result.isPresent()) {
 			Review review = result.get();
 			review.changeGrade(reviewDTO.getGrade());
-			review.changeText(review.getText());
+			review.changeText(reviewDTO.getText());
 			
 			reviewRepository.save(review);
 		}
